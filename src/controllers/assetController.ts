@@ -38,7 +38,13 @@ export const createAsset = async (req: Request, res: Response) => {
             return res.status(400).json({ error: 'El coincapId ya existe' });
         }
 
-        const newAsset = new Asset({ symbol, name, coincapId });
+        const newAsset = new Asset({ 
+            symbol, 
+            name, 
+            coincapId,
+            lastPriceUsd: 1500, // Precio base inyectado por seguridad
+            lastPriceAt: new Date()
+        });
         await newAsset.save();
         res.status(201).json(newAsset);
     } catch (error) {
